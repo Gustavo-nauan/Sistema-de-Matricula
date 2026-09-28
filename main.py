@@ -32,7 +32,7 @@ def menu():
                 except ValueError:
                     print("\n ⚠️ Erro: Por favor, digite uma idade válida (número inteiro).")
 
-            sucesso, mensagem =  matricular_aluno(nome, curso, idade, cpf, rg, telefone, email)
+            mensagem =  matricular_aluno(nome, curso, idade, cpf, rg, telefone, email)
             print(mensagem)
 
         elif opcao == "2":

@@ -37,7 +37,7 @@ def lista_alunos():
     sql = "SELECT * FROM alunos;"
     with conectar() as conexao:
         cursor = conexao.cursor()
-        cursor.execute(sql) # Corrigido: Executa a query corretamente
+        cursor.execute(sql)
         alunos_cadastrados = cursor.fetchall()
         return alunos_cadastrados
 
