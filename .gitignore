@@ -1,0 +1,9 @@
+# Banco de dados
+*.db
+*.sqlite
+*.sqlite3
+faculdade.db
+
+#cache do python
+__pycache__/
+*.pyc
