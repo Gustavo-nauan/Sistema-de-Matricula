@@ -20,7 +20,7 @@ def criar_tabela():
     '''
     with conectar() as conexao:
         conexao.execute(sql)
-        
+   
 def matricular_aluno(nome, curso, idade, cpf , rg, telefone, email):
     sql = '''
         INSERT INTO alunos(nome, curso, idade, CPF, RG, telefone, email) VALUES(?, ?, ?, ?, ? , ?, ?);'''
@@ -48,3 +48,15 @@ def buscar_aluno_por_cpf(cpf):
         cursor.execute(sql, (cpf,))
         aluno = cursor.fetchone()
         return aluno
+
+def  remover_aluno_por_cpf(cpf):
+    sql = "DELETE FROM alunos WHERE CPF = ?;"
+    with conectar() as conexao:
+        cursor = conexao.cursor()
+        cursor.execute(sql, (cpf,))
+
+        if cursor.rowcount > 0:
+            conexao.commit()
+            return True, f"\n✅ Aluno removido com sucesso."
+        else:
+            return False, f"\n⚠️ Nenhum aluno encontrado com o CPF {cpf} informado."

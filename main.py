@@ -1,5 +1,5 @@
 from validacoes import obter_cpf, obter_rg, obter_telefone, obter_email
-from banco_dados import criar_tabela, matricular_aluno, lista_alunos, buscar_aluno_por_cpf
+from banco_dados import criar_tabela, matricular_aluno, lista_alunos, buscar_aluno_por_cpf, remover_aluno_por_cpf
 
 
 def menu():
@@ -9,9 +9,10 @@ def menu():
         print("\n1 - Matricular Aluno")
         print("2 - Lista de Alunos")
         print("3 - Buscar Aluno por CPF")
-        print("4 - Sair")
+        print("4 - Remover aluno por CPF")
+        print("5 - Sair")
 
-        opcao = input("\n Escolha uma opção (1, 2, 3 ou 4): ").strip()
+        opcao = input("\n Escolha uma opção (1, 2, 3, 4 ou 5): ").strip()
 
         if opcao == "1":
             nome = input("\nDigite o nome do aluno: ").strip()
@@ -72,6 +73,12 @@ def menu():
                 print(f" ID: {aluno['id']} | Nome: {aluno['nome']} | Curso: {aluno['curso']}")
 
         elif opcao == "4":
+
+            cpf = obter_cpf("Digite o CPF do aluno que deseja remover: ")
+            sucesso, mensagem = remover_aluno_por_cpf(cpf)
+            print(mensagem)
+
+        elif opcao == "5":
             print("\nA sair do sistema...")
             break
 
