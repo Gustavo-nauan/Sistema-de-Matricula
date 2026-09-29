@@ -1,26 +1,27 @@
-from validacoes import obter_cpf, obter_rg, obter_telefone, obter_email
-from banco_dados import criar_tabela, matricular_aluno, lista_alunos, buscar_aluno_por_cpf, remover_aluno_por_cpf
+import banco_dados as bd
+import validacoes as va
 
 
 def menu():
-    criar_tabela()
+    bd.criar_tabela()
     while True:
         print("\n===================== Sistema de Cadastro de Alunos ====================")
         print("\n1 - Matricular Aluno")
         print("2 - Lista de Alunos")
         print("3 - Buscar Aluno por CPF")
         print("4 - Remover aluno por CPF")
-        print("5 - Sair")
+        print("5 - Atualizar dados do aluno")
+        print("6 - Sair")
 
-        opcao = input("\n Escolha uma opção (1, 2, 3, 4 ou 5): ").strip()
+        opcao = input("\n Escolha uma opção (1, 2, 3, 4, 5 ou 6): ").strip()
 
         if opcao == "1":
             nome = input("\nDigite o nome do aluno: ").strip()
             curso = input("Digite o nome do curso: ").strip()
-            cpf = obter_cpf()
-            rg = obter_rg()
-            telefone = obter_telefone()
-            email = obter_email()
+            cpf = va.obter_cpf()
+            rg = va.obter_rg()
+            telefone = va.obter_telefone()
+            email = va.obter_email()
 
             while True:
                 try:
@@ -33,11 +34,11 @@ def menu():
                 except ValueError:
                     print("\n ⚠️ Erro: Por favor, digite uma idade válida (número inteiro).")
 
-            mensagem =  matricular_aluno(nome, curso, idade, cpf, rg, telefone, email)
+            mensagem =  bd.matricular_aluno(nome, curso, idade, cpf, rg, telefone, email)
             print(mensagem)
 
         elif opcao == "2":
-            alunos_cadastrados = lista_alunos()
+            alunos_cadastrados = bd.lista_alunos()
             if len(alunos_cadastrados) == 0:
                 print("\n ⚠️ Nenhum aluno cadastrado.")
             else:
@@ -63,8 +64,8 @@ def menu():
                     print("=" * 60)
 
         elif opcao == "3":
-            cpf = obter_cpf("Digite o CPF do aluno para busca (somente números): ")
-            aluno = buscar_aluno_por_cpf(cpf)
+            cpf = va.obter_cpf("Digite o CPF do aluno para busca (somente números): ")
+            aluno = bd.buscar_aluno_por_cpf(cpf)
 
             if aluno is None:
                 print("\n ⚠️ Nenhum aluno encontrado com o CPF informado.")
@@ -74,11 +75,46 @@ def menu():
 
         elif opcao == "4":
 
-            cpf = obter_cpf("Digite o CPF do aluno que deseja remover: ")
-            sucesso, mensagem = remover_aluno_por_cpf(cpf)
+            cpf = va.obter_cpf("Digite o CPF do aluno que deseja remover: ")
+            sucesso, mensagem = bd.remover_aluno_por_cpf(cpf)
             print(mensagem)
 
-        elif opcao == "5":
+        elif opcao == '5':
+            cpf = va.obter_cpf("Digite o CPF do aluno que deseja fazer as alterações: ")
+            aluno_existente = bd.buscar_aluno_por_cpf(cpf)
+            if aluno_existente is None:
+                print("\n⚠️ ERRO: Nenhum aluno encontrado com esse CPF.")
+            else:
+                while True:
+                    print(f"\n===================== Atualizar Dados: {aluno_existente['nome']} ====================")
+                    print("1 - Alterar Curso")
+                    print("2 - Alterar Telefone")
+                    print("3 - Altera Email")
+                    print("4 - Concluir e voltar ao Menu principal")
+
+                    sua_opcao = input("Digite oque você deseja alterar (1 a 4): ").strip()
+                    if sua_opcao == '1':
+                        novo_curso = input("Digite o novo curso: ")
+                        sucesso, mensagem = bd.atualizar_curso(cpf, novo_curso)
+                        print(mensagem)
+
+                    elif sua_opcao == '2':
+                        novo_telefone = input("Digite o novo telefone: ")
+                        sucesso, mensagem = bd.atualizar_telefone(cpf, novo_telefone)
+                        print(mensagem)
+
+                    elif sua_opcao == '3':
+                        novo_email = input("Digite o novo email: ")
+                        sucesso, mensagem = bd.atualizar_email(cpf, novo_email)
+                        print(mensagem)
+
+                    elif sua_opcao == '4':
+                        print("Voltando para o menu principal.")
+                        break
+                    else:
+                        print("Digite uma opção válida. Escolha de 1 a 4")
+
+        elif opcao == "6":
             print("\nA sair do sistema...")
             break
 

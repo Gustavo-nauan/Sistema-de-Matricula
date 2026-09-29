@@ -60,3 +60,27 @@ def  remover_aluno_por_cpf(cpf):
             return True, f"\n✅ Aluno removido com sucesso."
         else:
             return False, f"\n⚠️ Nenhum aluno encontrado com o CPF {cpf} informado."
+
+def atualizar_curso(cpf, novo_curso):
+
+    sql =  "UPDATE alunos SET curso = ? WHERE CPF = ?;"
+    with conectar () as conexao:
+        cursor = conexao.cursor()
+        cursor.execute(sql, (novo_curso, cpf))
+        return True, f"\n✅ Curso do aluno atualizados com sucesso."
+
+def atualizar_telefone(cpf, novo_telefone):
+
+    sql =  "UPDATE alunos SET telefone = ? WHERE CPF = ?;"
+    with conectar () as conexao:
+        cursor = conexao.cursor()
+        cursor.execute(sql, (novo_telefone, cpf))
+        return True, f"\n✅ Telefone do aluno atualizados com sucesso."
+
+def atualizar_email(cpf, novo_email):
+
+    sql =  "UPDATE alunos SET email = ? WHERE email = ?;"
+    with conectar () as conexao:
+        cursor = conexao.cursor()
+        cursor.execute(sql, (novo_email, cpf))
+        return True, f"\n✅ Email do aluno atualizados com sucesso."
