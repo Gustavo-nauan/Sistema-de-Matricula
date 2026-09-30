@@ -19,7 +19,7 @@ def menu():
 
         if opcao == "1":
             nome = input("\nDigite o nome do aluno: ").strip().title()
-            curso = input("Digite o nome do curso: ").strip().title()
+            curso = va.obter_curso().title()
             cpf = va.obter_cpf()
             rg = va.obter_rg()
             telefone = va.obter_telefone()

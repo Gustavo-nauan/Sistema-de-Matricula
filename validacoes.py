@@ -63,3 +63,24 @@ def calcular_idade(data_nascimento_str):
     if (hoje.month, hoje.day) < (nascimento.month, hoje.day):
         idade -=1
     return idade
+
+# Cursos disponiveis
+def obter_curso():
+    cursos_validos = {"si": "Sistemas da Informação", "Sistemas da Informacao": "Sistemas da Informação", "Sistemas da Informação": "Sistemas da Informação",
+                      "med": "Medicina", "medicina": "Medicina",
+                      "direiro": "Direito", "dir": "Direito"}
+    while True:
+        print("\n====== Grade Curricular Disponível ======")
+        print("• Sistemas da Informação")
+        print("• Medicina")
+        print("• Direito")
+
+        entrada = input("Digite o nome do curso: ").strip().lower()
+        entrada_tratada = entrada.replace("ã", "a").replace("ç", "c").replace("õ", "o")
+
+        if entrada in cursos_validos:
+            return cursos_validos[entrada]
+        elif entrada_tratada in cursos_validos:
+            return cursos_validos[entrada_tratada]
+        else:
+            print("\n❌ ERRO: curso não correspondente a grade curricular.")
