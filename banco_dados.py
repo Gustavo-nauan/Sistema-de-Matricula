@@ -1,7 +1,7 @@
 import sqlite3
 
 def conectar():
-    conexao = sqlite3.connect('faculdade.db')
+    conexao = sqlite3.connect('teste.db')
     conexao.row_factory = sqlite3.Row
     return conexao
 
@@ -14,17 +14,17 @@ def criar_tabela():
         CPF TEXT NOT NULL UNIQUE,
         RG TEXT NOT NULL UNIQUE,
         telefone TEXT NOT NULL,
-        email TEXT NOT NULL,
-        idade INTEGER 
+        email TEXT NOT NULL UNIQUE,
+        data_nascimento TEXT NOT NULL 
         );
     '''
     with conectar() as conexao:
         conexao.execute(sql)
    
-def matricular_aluno(nome, curso, idade, cpf , rg, telefone, email):
+def matricular_aluno(nome, curso, data_nascimento, cpf , rg, telefone, email):
     sql = '''
-        INSERT INTO alunos(nome, curso, idade, CPF, RG, telefone, email) VALUES(?, ?, ?, ?, ? , ?, ?);'''
-    valores = (nome, curso, idade, cpf, rg, telefone, email)
+        INSERT INTO alunos(nome, curso, data_nascimento, CPF, RG, telefone, email) VALUES(?, ?, ?, ?, ? , ?, ?);'''
+    valores = (nome, curso, data_nascimento, cpf, rg, telefone, email)
 
     try:
         with conectar() as conexao:
@@ -40,6 +40,14 @@ def lista_alunos():
         cursor.execute(sql)
         alunos_cadastrados = cursor.fetchall()
         return alunos_cadastrados
+    
+def lista_aluno_por_curso(nome_curso):
+    slq = "SELECT * FROM alunos WHERE curso = ?;"
+    with conectar() as conexao:
+        cursor = conexao.cursor()
+        cursor.execute(slq, (nome_curso,))
+        alunos = cursor.fetchall()
+        return alunos
 
 def buscar_aluno_por_cpf(cpf):
     sql = "SELECT * FROM alunos WHERE CPF = ?;"
@@ -84,3 +92,4 @@ def atualizar_email(cpf, novo_email):
         cursor = conexao.cursor()
         cursor.execute(sql, (novo_email, cpf))
         return True, f"\n✅ Email do aluno atualizados com sucesso."
+    

@@ -1,5 +1,6 @@
 import banco_dados as bd
 import validacoes as va
+from datetime import datetime
 
 
 def menu():
@@ -8,33 +9,24 @@ def menu():
         print("\n===================== Sistema de Cadastro de Alunos ====================")
         print("\n1 - Matricular Aluno")
         print("2 - Lista de Alunos")
-        print("3 - Buscar Aluno por CPF")
-        print("4 - Remover aluno por CPF")
-        print("5 - Atualizar dados do aluno")
-        print("6 - Sair")
+        print("3 - Buscar aluno por curso")
+        print("4 - Buscar Aluno por CPF")
+        print("5 - Remover aluno por CPF")
+        print("6 - Atualizar dados do aluno")
+        print("7 - Sair")
 
-        opcao = input("\n Escolha uma opção (1, 2, 3, 4, 5 ou 6): ").strip()
+        opcao = input("\nEscolha uma opção (1, 2, 3, 4, 5, 6, 7): ").strip()
 
         if opcao == "1":
-            nome = input("\nDigite o nome do aluno: ").strip()
-            curso = input("Digite o nome do curso: ").strip()
+            nome = input("\nDigite o nome do aluno: ").strip().title()
+            curso = input("Digite o nome do curso: ").strip().title()
             cpf = va.obter_cpf()
             rg = va.obter_rg()
             telefone = va.obter_telefone()
             email = va.obter_email()
+            data_nascimento = va.obter_data_nascimento()
 
-            while True:
-                try:
-                    idade = int(input("Digite a idade do aluno: "))
-                    if 0 < idade < 120:
-                        break
-                    else:
-                        print("❌ ERRO: Digite uma idade realista.")
-
-                except ValueError:
-                    print("\n ⚠️ Erro: Por favor, digite uma idade válida (número inteiro).")
-
-            mensagem =  bd.matricular_aluno(nome, curso, idade, cpf, rg, telefone, email)
+            mensagem =  bd.matricular_aluno(nome, curso, data_nascimento, cpf, rg, telefone, email)
             print(mensagem)
 
         elif opcao == "2":
@@ -44,6 +36,11 @@ def menu():
             else:
                 print("\n===================== Alunos Cadastrados ====================")
                 for alunos in alunos_cadastrados:
+                    data_db = alunos['data_nascimento']
+                    data_obj = datetime.strptime(data_db, "%Y-%m-%d")
+                    data_formatada = data_obj.strftime("%d/%m/%Y")
+                    idade_calculada = va.calcular_idade(data_db)
+
                     cpf_puro = alunos['CPF']
                     rg_puro = alunos['RG']
                     telefone_puro = alunos['telefone']
@@ -58,12 +55,21 @@ def menu():
                     else:
                         telefone_exibicao = f"({telefone_puro[:2]}) {telefone_puro[2:6]}-{telefone_puro[6:10]}"
                         
-                    print(f" ID: {alunos['id']} | Nome: {alunos['nome']} | Curso: {alunos['curso']}")
-                    print(f" CPF: {cpf_exibicao} | RG: {rg_exibicao} | Idade: {alunos['idade']}")
-                    print(f" Telefone: {telefone_exibicao} | E-mail: {alunos['email']}")
+                    print(f"ID: {alunos['id']} | Nome: {alunos['nome']} | Curso: {alunos['curso']}")
+                    print(f"CPF: {cpf_exibicao} | RG: {rg_exibicao} | Idade: {idade_calculada} anos ({data_formatada})")
+                    print(f"Telefone: {telefone_exibicao} | E-mail: {alunos['email']}")
                     print("=" * 60)
 
-        elif opcao == "3":
+        elif opcao == '3':
+            busca_curso = input("Digite O curso que deseja fazer a busca: ").strip()
+            alunos_por_curso = bd.lista_aluno_por_curso(busca_curso)
+            if len(alunos_por_curso) == 0:
+                print(f"\n⚠️ Nenhum aluno cadastrado nesse curso {busca_curso}.")
+            else:
+                for alunos in alunos_por_curso:
+                    print(f"ID: {alunos['id']} | Nome: {alunos['nome']} | Email: {alunos['email']}")
+
+        elif opcao == "4":
             cpf = va.obter_cpf("Digite o CPF do aluno para busca (somente números): ")
             aluno = bd.buscar_aluno_por_cpf(cpf)
 
@@ -73,13 +79,13 @@ def menu():
                 print("\n===================== Aluno Encontrado ====================")
                 print(f" ID: {aluno['id']} | Nome: {aluno['nome']} | Curso: {aluno['curso']}")
 
-        elif opcao == "4":
+        elif opcao == "5":
 
             cpf = va.obter_cpf("Digite o CPF do aluno que deseja remover: ")
             sucesso, mensagem = bd.remover_aluno_por_cpf(cpf)
             print(mensagem)
 
-        elif opcao == '5':
+        elif opcao == '6':
             cpf = va.obter_cpf("Digite o CPF do aluno que deseja fazer as alterações: ")
             aluno_existente = bd.buscar_aluno_por_cpf(cpf)
             if aluno_existente is None:
@@ -114,7 +120,7 @@ def menu():
                     else:
                         print("Digite uma opção válida. Escolha de 1 a 4")
 
-        elif opcao == "6":
+        elif opcao == "7":
             print("\nA sair do sistema...")
             break
 
