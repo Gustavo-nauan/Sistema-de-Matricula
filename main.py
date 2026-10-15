@@ -1,5 +1,6 @@
 import banco_dados as bd
 import validacoes as va
+import logging
 from datetime import datetime
 
 
@@ -13,9 +14,10 @@ def menu():
         print("4 - Buscar Aluno por CPF")
         print("5 - Remover aluno por CPF")
         print("6 - Atualizar dados do aluno")
-        print("7 - Sair")
+        print("7 - Alunos por curso")
+        print("8 - Sair")
 
-        opcao = input("\nEscolha uma opção (1, 2, 3, 4, 5, 6, 7): ").strip()
+        opcao = input("\nEscolha uma opção (1, 2, 3, 4, 5, 6, 7, 8): ").strip()
 
         if opcao == "1":
             nome = input("\nDigite o nome do aluno: ").strip().title()
@@ -120,7 +122,23 @@ def menu():
                     else:
                         print("Digite uma opção válida. Escolha de 1 a 4")
 
-        elif opcao == "7":
+        elif opcao == '7':
+            estatistica = bd.contar_alunos_por_curso()
+            if len(estatistica) == 0:
+                print("\n⚠️ Nenhum dado disponivel.")
+            else:
+                print("===================== DADOS ESTATISTICOS DO CURSO =====================")
+                total_geral = 0
+                for linha in estatistica:
+                    nome_curso = linha['curso']
+                    qtd = linha['total']
+                    total_geral +=1
+                    print(f"Curso: {nome_curso} | Total de Matriculados: {qtd} aluno(s)")
+                print("=" * 70)
+                print(f"Total geral de alunos no sistena: {total_geral}")
+                print("=" * 70)
+
+        elif opcao == "8":
             print("\nA sair do sistema...")
             break
 
@@ -128,4 +146,13 @@ def menu():
             print("\n ⚠️ Opção inválida. Por favor, escolha uma opção válida (1, 2, 3, 4) ")
 
 if __name__ == "__main__":
-    menu()
+    try:
+        logging.info("=== SISTEMA INICIADO ===")
+        menu()
+        logging.info("=== SISTEMA ENCERRADO NORMALMENTE ===")
+    except KeyboardInterrupt:
+        print(f"\n\n Operação interrompida pelo usuário. Encerrando de forma segura.")
+        logging.warning("=== SISTEMA INTERROMPIDO PELO USUÁRIO (KeyboadInterrupt) ===")
+    except Exception as e:
+        print(f"\nERRO CRÍTICO INESPERADO: O sistema precisou ser incerrado.")
+        logging.critical(f"CRASH DO SISTEMA: {e}", exe_info=True)

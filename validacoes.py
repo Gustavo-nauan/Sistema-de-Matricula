@@ -68,7 +68,7 @@ def calcular_idade(data_nascimento_str):
 def obter_curso():
     cursos_validos = {"si": "Sistemas da Informação", "Sistemas da Informacao": "Sistemas da Informação", "Sistemas da Informação": "Sistemas da Informação",
                       "med": "Medicina", "medicina": "Medicina",
-                      "direiro": "Direito", "dir": "Direito"}
+                      "direito": "Direito", "dir": "Direito"}
     while True:
         print("\n====== Grade Curricular Disponível ======")
         print("• Sistemas da Informação")

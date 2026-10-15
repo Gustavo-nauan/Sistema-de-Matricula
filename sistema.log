@@ -1,0 +1,25 @@
+2026-10-15 08:28:21 | INFO | === SISTEMA INICIADO ===
+2026-10-15 08:29:51 | INFO | === SISTEMA INICIADO ===
+2026-10-15 08:31:35 | INFO | MATRÍCULA: Aluno 'Gustavo Nauan Silva'(CPF: 12312312311) matriculado em 'Direito.
+2026-10-15 08:33:37 | ERROR | FALHA CRITICA ao remover CPF 12312312311: Incorrect number of bindings supplied. The current statement uses 1, and there are 11 supplied.
+2026-10-15 08:34:55 | ERROR | FALHA CRITICA ao remover CPF 12312344422: Incorrect number of bindings supplied. The current statement uses 1, and there are 11 supplied.
+2026-10-15 08:35:37 | INFO | UPDATE CURSO: CPF 12312344422 alterado para 'sistemas da informacao'
+2026-10-15 08:35:55 | INFO | UPDATE TELEFONE: CPF 12312344422 alterado para '33211111111'
+2026-10-15 08:36:09 | INFO | UPDATE E-MAIL: CPF 12312344422 alterado para 'thbarros@gg.com'.
+2026-10-15 08:36:19 | INFO | === SISTEMA ENCERRADO NORMALMENTE ===
+2026-10-15 08:52:30 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:03:23 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:03:46 | ERROR | FALHA CRITICA ao remover CPF 12312312311: Incorrect number of bindings supplied. The current statement uses 1, and there are 11 supplied.
+2026-10-15 09:15:25 | WARNING | === SISTEMA INTERROMPIDO PELO USUÁRIO (KeyboadInterrupt) ===
+2026-10-15 09:15:35 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:15:45 | ERROR | FALHA CRITICA ao remover CPF 12312312311: Incorrect number of bindings supplied. The current statement uses 1, and there are 11 supplied.
+2026-10-15 09:16:13 | ERROR | FALHA CRITICA ao remover CPF 12312312311: Incorrect number of bindings supplied. The current statement uses 1, and there are 11 supplied.
+2026-10-15 09:19:32 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:19:40 | INFO | ESCLUSÂO: Aluno: 'Gustavo Nauan Silva' (ID: 3 | CPF: 12312312311) removido do banco de dados.
+2026-10-15 09:20:03 | INFO | === SISTEMA ENCERRADO NORMALMENTE ===
+2026-10-15 09:22:37 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:24:02 | INFO | === SISTEMA ENCERRADO NORMALMENTE ===
+2026-10-15 09:24:15 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:24:39 | WARNING | === SISTEMA INTERROMPIDO PELO USUÁRIO (KeyboadInterrupt) ===
+2026-10-15 09:24:59 | INFO | === SISTEMA INICIADO ===
+2026-10-15 09:25:04 | INFO | === SISTEMA ENCERRADO NORMALMENTE ===

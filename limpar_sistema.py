@@ -1,6 +1,6 @@
 import sqlite3
 
-conexao = sqlite3.connect('faculdade.db')
+conexao = sqlite3.connect('teste.db')
 cursor = conexao.cursor()
 
 cursor.execute("DELETE FROM alunos;")
